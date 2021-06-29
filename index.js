@@ -37,3 +37,8 @@ const hoursWorkedOnDate = (employee, date) => {
   const hours = Math.abs((timeIn.hour - timeOut.hour)) 
   return parseInt(hours.toString().split('0'))
  }
+
+ const wagesEarnedOnDate = (employee, date) => {
+  const hours = hoursWorkedOnDate(employee, date)
+  return hours * employee.payPerHour
+ }
