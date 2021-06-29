@@ -34,11 +34,25 @@ const createTimeOutEvent = (employee, timeOut) => {
 const hoursWorkedOnDate = (employee, date) => {
   const timeIn = employee.timeInEvents.find(record => record.date === date);
   const timeOut = employee.timeOutEvents.find(record => record.date === date);
-  const hours = Math.abs((timeIn.hour - timeOut.hour)) 
-  return parseInt(hours.toString().split('0'))
+  const hours = Math.abs((parseInt(timeIn.hour.toString().split('0')) - parseInt(timeOut.hour.toString().split('0')))) 
+  return hours
  }
 
  const wagesEarnedOnDate = (employee, date) => {
   const hours = hoursWorkedOnDate(employee, date)
   return hours * employee.payPerHour
+ }
+
+ const allWagesFor = (employee) => {
+  const wages = employee.timeInEvents.map(record => wagesEarnedOnDate(employee, record.date));
+  return wages.reduce((wage, total) => wage + total);
+ }
+
+ const calculatePayroll = (employees) => {
+  const payroll = employees.map(employee => allWagesFor(employee));
+  return payroll.reduce((wage, total) => wage + total);
+ }
+
+ const findEmployeeByFirstName = (records, name) => {
+  return records.find(record => record.firstName === name);
  }
